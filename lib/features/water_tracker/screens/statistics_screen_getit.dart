@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parc8/features/water_tracker/state/water_tracker_state.dart';
 import 'package:parc8/shared/constants/drink_types.dart';
-import 'package:parc8/shared/state/app_state_provider.dart';
 import 'package:parc8/shared/di/service_locator.dart';
 import 'package:parc8/shared/services/settings_service.dart';
 
-class StatisticsScreen extends StatelessWidget {
-  const StatisticsScreen({super.key});
+class StatisticsScreenGetIt extends StatelessWidget {
+  const StatisticsScreenGetIt({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final appState = AppStateProvider.of(context).appState;
+    final appState = serviceLocator<WaterTrackerState>();
     final settingsService = serviceLocator<SettingsService>();
     final progress = appState.getProgress(settingsService.dailyGoal);
 
@@ -25,7 +25,7 @@ class StatisticsScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
-        title: const Text('Статистика (Inherited Widget)'),
+        title: const Text('Статистика (GetIt)'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -50,11 +50,11 @@ class StatisticsScreen extends StatelessWidget {
                     Text('Прогресс: ${(progress * 100).toStringAsFixed(1)}%'),
                     const SizedBox(height: 10),
                     const Text(
-                      'Используется: Inherited Widget для данных + GetIt для настроек',
+                      'Используется: GetIt DI контейнер для всего',
                       style: TextStyle(
                         fontSize: 12,
                         fontStyle: FontStyle.italic,
-                        color: Colors.blue,
+                        color: Colors.green,
                       ),
                     ),
                   ],

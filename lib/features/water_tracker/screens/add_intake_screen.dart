@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parc8/shared/constants/drink_types.dart';
-import 'package:parc8/features/water_tracker/state/water_tracker_state.dart';
+import 'package:parc8/shared/state/app_state_provider.dart';
 import 'package:parc8/features/water_tracker/models/water_intake.dart';
 
 class AddIntakeScreen extends StatefulWidget {
-  final WaterTrackerState appState;
-
-  const AddIntakeScreen({
-    super.key,
-    required this.appState,
-  });
+  const AddIntakeScreen({super.key});
 
   @override
   State<AddIntakeScreen> createState() => _AddIntakeScreenState();
@@ -23,6 +18,7 @@ class _AddIntakeScreenState extends State<AddIntakeScreen> {
 
   void _submit() {
     final volume = int.tryParse(_volumeController.text);
+    final appState = AppStateProvider.of(context).appState;
 
     if (volume != null && volume > 0) {
       final newIntake = WaterIntake(
@@ -31,7 +27,7 @@ class _AddIntakeScreenState extends State<AddIntakeScreen> {
         drinkType: _selectedDrinkType,
         time: DateTime.now(),
       );
-      widget.appState.addIntake(newIntake);
+      appState.addIntake(newIntake);
       context.pop();
     } else {
       _showErrorDialog('Пожалуйста, введите корректное количество мл (больше 0)');
