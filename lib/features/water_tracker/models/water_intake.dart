@@ -14,6 +14,7 @@ class WaterIntake {
   });
 
 
+
   int get effectiveVolume {
     final drink = DrinkTypes.allTypes.firstWhere(
           (d) => d.id == drinkType,
